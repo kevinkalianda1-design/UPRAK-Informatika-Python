@@ -3,24 +3,24 @@ import os
 import sys
 import time
 
-# ==========================================
-# BAGIAN 1: FUNGSI BANTUAN (UTILITIES)
-# ==========================================
+# ============================================
+# BAGIAN 1: Efek Loading dan Pembersih Layar 
+# ============================================
 
 def bersihkan_layar():
-    """Membersihkan layar terminal agar tampilan rapi."""
-    # Jika Windows pakai 'cls', jika Linux/Mac pakai 'clear'
+    """Menghapus semua teks di terminal untuk lanjut ke seksi berikutnya"""
+    # Kalau Windows pakai 'cls', kalau Linux/Mac pakai 'clear'
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def loading(durasi=1):
-    """Efek loading sederhana."""
+    """Efek loading/memproses"""
     print("\nMemproses...", end="", flush=True)
     time.sleep(durasi)
     print(" Selesai!\n")
     time.sleep(0.5)
 
 # ==========================================
-# BAGIAN 2: LOGIKA GAME (MODUL)
+# BAGIAN 2: LOGIKA GAME
 # ==========================================
 
 def game_batu_gunting_kertas():
@@ -59,9 +59,9 @@ def game_batu_gunting_kertas():
 def game_tebak_angka():
     bersihkan_layar()
     print("="*40)
-    print("   GAME 2: TEBAK ANGKA MISTERIUS")
+    print("   GAME 2: TEBAK ANGKA RAHASIA")
     print("="*40)
-    print("Saya simpan angka 1 s.d 20. Kamu punya 5 nyawa.")
+    print("Saya punya angka 1 s.d 20. Kamu punya 5 nyawa.")
     
     angka_rahasia = random.randint(1, 20)
     nyawa = 5
