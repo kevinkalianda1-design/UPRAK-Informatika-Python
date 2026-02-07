@@ -194,7 +194,7 @@ def menu_utama():
     while True:
         bersihkan_layar()
         print("="*40)
-        print("    APLIKASI MINI GAME - KELOMPOKMU") 
+        print("    APLIKASI MINI GAME - KELOMPOK 8") 
         print("="*40)
         print("[1] Batu Gunting Kertas")
         print("[2] Tebak Angka Misterius")
