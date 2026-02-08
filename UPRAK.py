@@ -8,12 +8,9 @@ import time
 # ============================================
 
 def bersihkan_layar():
-    """Menghapus semua teks di terminal untuk lanjut ke seksi berikutnya"""
-    # Kalau Windows pakai 'cls', kalau Linux/Mac pakai 'clear'
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def loading(durasi=1):
-    """Efek loading/memproses"""
     print("\nMemproses...", end="", flush=True)
     time.sleep(durasi)
     print(" Selesai!\n")
@@ -40,13 +37,12 @@ def game_batu_gunting_kertas():
             break
             
         if user not in pilihan:
-            print(">> Typo? Masukkan: batu, gunting, atau kertas.")
+            print(">> Masukkan: batu, gunting, atau kertas.")
             continue
             
         loading(0.5)
         print(f"Kamu: {user.upper()}  VS  Komputer: {komputer.upper()}")
         
-        # Logika Menang/Kalah
         if user == komputer:
             print(">> HASIL: SERI!")
         elif (user == "batu" and komputer == "gunting") or \
@@ -83,12 +79,16 @@ def game_tebak_angka():
             nyawa -= 1
             
         except ValueError:
-            print(">> Masukkan ANGKA ya, bukan huruf!")
-    
+            print(">> Masukkan ANGKA ya!")
+
     if nyawa == 0:
         print(f"\nGAME OVER! Angka yang benar adalah: {angka_rahasia}")
     
     input("\nTekan Enter untuk kembali...")
+
+# ==========================================
+# GAME TIC TAC TOE (VISUAL BARU)
+# ==========================================
 
 def game_tictactoe():
     bersihkan_layar()
@@ -96,24 +96,33 @@ def game_tictactoe():
     print("   GAME 3: TIC TAC TOE (X vs O)")
     print("="*40)
     print("Mode: 2 Pemain (Bergantian)")
-    print("Cara main: Pilih angka 1-9 untuk isi kotak.")
 
-    # Membuat papan kosong (List berisi 9 spasi)
     board = [" " for _ in range(9)]
 
-    # Fungsi lokal untuk menampilkan papan
     def print_board():
-        print(f"\n {board[0]} | {board[1]} | {board[2]} ")
-        print("---|---|---")
-        print(f" {board[3]} | {board[4]} | {board[5]} ")
-        print("---|---|---")
-        print(f" {board[6]} | {board[7]} | {board[8]} \n")
+        print("\n========== TIC TAC TOE ==========")
+        print("Posisi Kotak:")
+        print("""
+ 1 | 2 | 3
+---+---+---
+ 4 | 5 | 6
+---+---+---
+ 7 | 8 | 9
+""")
 
-    # Pola kemenangan (Baris, Kolom, Diagonal)
+        print("Papan Permainan:")
+        print(f"""
+ {board[0]} | {board[1]} | {board[2]}
+---+---+---
+ {board[3]} | {board[4]} | {board[5]}
+---+---+---
+ {board[6]} | {board[7]} | {board[8]}
+""")
+
     winning_combos = [
-        (0, 1, 2), (3, 4, 5), (6, 7, 8), # Baris
-        (0, 3, 6), (1, 4, 7), (2, 5, 8), # Kolom
-        (0, 4, 8), (2, 4, 6)             # Diagonal
+        (0,1,2),(3,4,5),(6,7,8),
+        (0,3,6),(1,4,7),(2,5,8),
+        (0,4,8),(2,4,6)
     ]
 
     giliran = "X"
@@ -124,37 +133,33 @@ def game_tictactoe():
 
     while not game_over:
         try:
-            # Input user dikurangi 1 karena index list mulai dari 0
             pilihan = int(input(f"Giliran {giliran} (pilih 1-9): ")) - 1
-            
-            # Validasi Input
+
             if pilihan < 0 or pilihan > 8:
                 print(">> Angka harus 1 sampai 9!")
                 continue
+
             if board[pilihan] != " ":
-                print(">> Kotak sudah isi! Pilih lain.")
+                print(">> Kotak sudah terisi!")
                 continue
 
-            # Isi papan
             board[pilihan] = giliran
             langkah += 1
+            bersihkan_layar()
             print_board()
 
-            # Cek Kemenangan
             menang = False
-            for a, b, c in winning_combos:
+            for a,b,c in winning_combos:
                 if board[a] == board[b] == board[c] and board[a] != " ":
-                    print(f"\n>>> SELAMAT! PEMAIN '{giliran}' MENANG! <<<")
+                    print(f"\n>>> PEMAIN '{giliran}' MENANG! <<<")
                     menang = True
                     game_over = True
                     break
-            
-            # Cek Seri
+
             if not menang and langkah == 9:
                 print("\n>>> PERMAINAN SERI (DRAW)! <<<")
                 game_over = True
 
-            # Ganti Giliran
             giliran = "O" if giliran == "X" else "X"
 
         except ValueError:
@@ -167,7 +172,6 @@ def game_tictactoe():
 # ==========================================
 
 def login_system():
-    """Halaman Login Sederhana."""
     bersihkan_layar()
     print("########################################")
     print("#      SISTEM KEAMANAN GAME CENTER     #")
@@ -175,8 +179,8 @@ def login_system():
     
     limit = 3
     while limit > 0:
-        user = input("Username : ") # Masukkan: admin
-        pw   = input("Password : ") # Masukkan: 123
+        user = input("Username : ")
+        pw   = input("Password : ")
         
         if user == "admin" and pw == "123":
             print("\nLogin Berhasil! Akses diberikan.")
@@ -190,7 +194,6 @@ def login_system():
     return False
 
 def menu_utama():
-    """Menu Navigasi Utama."""
     while True:
         bersihkan_layar()
         print("="*40)
