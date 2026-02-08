@@ -17,7 +17,7 @@ def loading(durasi=1):
     time.sleep(0.5)
 
 # ==========================================
-# BAGIAN 2: LOGIKA GAME
+# GAME 1: BATU GUNTING KERTAS (TETAP)
 # ==========================================
 
 def game_batu_gunting_kertas():
@@ -37,7 +37,7 @@ def game_batu_gunting_kertas():
             break
             
         if user not in pilihan:
-            print(">> Masukkan: batu, gunting, atau kertas.")
+            print(">> Typo? Masukkan: batu, gunting, atau kertas.")
             continue
             
         loading(0.5)
@@ -51,6 +51,10 @@ def game_batu_gunting_kertas():
             print(">> HASIL: MENANG! Hebat!")
         else:
             print(">> HASIL: KALAH... Coba lagi!")
+
+# ==========================================
+# GAME 2: TEBAK ANGKA (TETAP)
+# ==========================================
 
 def game_tebak_angka():
     bersihkan_layar()
@@ -87,7 +91,7 @@ def game_tebak_angka():
     input("\nTekan Enter untuk kembali...")
 
 # ==========================================
-# GAME TIC TAC TOE (VISUAL BARU)
+# GAME 3: TIC TAC TOE BERWARNA
 # ==========================================
 
 def game_tictactoe():
@@ -95,13 +99,26 @@ def game_tictactoe():
     print("="*40)
     print("   GAME 3: TIC TAC TOE (X vs O)")
     print("="*40)
-    print("Mode: 2 Pemain (Bergantian)")
+
+    # WARNA ANSI
+    MERAH = "\033[91m"
+    BIRU = "\033[94m"
+    CYAN = "\033[96m"
+    RESET = "\033[0m"
 
     board = [" " for _ in range(9)]
 
+    def warna_simbol(simbol):
+        if simbol == "X":
+            return MERAH + "X" + RESET
+        elif simbol == "O":
+            return BIRU + "O" + RESET
+        return simbol
+
     def print_board():
-        print("\n========== TIC TAC TOE ==========")
-        print("Posisi Kotak:")
+        garis = CYAN + "---+---+---" + RESET
+        
+        print("\n" + CYAN + "Posisi Kotak:" + RESET)
         print("""
  1 | 2 | 3
 ---+---+---
@@ -110,14 +127,12 @@ def game_tictactoe():
  7 | 8 | 9
 """)
 
-        print("Papan Permainan:")
-        print(f"""
- {board[0]} | {board[1]} | {board[2]}
----+---+---
- {board[3]} | {board[4]} | {board[5]}
----+---+---
- {board[6]} | {board[7]} | {board[8]}
-""")
+        print(CYAN + "Papan Permainan:" + RESET)
+        print(f" {warna_simbol(board[0])} | {warna_simbol(board[1])} | {warna_simbol(board[2])} ")
+        print(garis)
+        print(f" {warna_simbol(board[3])} | {warna_simbol(board[4])} | {warna_simbol(board[5])} ")
+        print(garis)
+        print(f" {warna_simbol(board[6])} | {warna_simbol(board[7])} | {warna_simbol(board[8])} ")
 
     winning_combos = [
         (0,1,2),(3,4,5),(6,7,8),
@@ -133,25 +148,26 @@ def game_tictactoe():
 
     while not game_over:
         try:
-            pilihan = int(input(f"Giliran {giliran} (pilih 1-9): ")) - 1
+            pilihan = int(input(f"\nGiliran {giliran} (pilih 1-9): ")) - 1
 
             if pilihan < 0 or pilihan > 8:
                 print(">> Angka harus 1 sampai 9!")
                 continue
 
             if board[pilihan] != " ":
-                print(">> Kotak sudah terisi!")
+                print(">> Kotak sudah isi! Pilih lain.")
                 continue
 
             board[pilihan] = giliran
             langkah += 1
+
             bersihkan_layar()
             print_board()
 
             menang = False
             for a,b,c in winning_combos:
                 if board[a] == board[b] == board[c] and board[a] != " ":
-                    print(f"\n>>> PEMAIN '{giliran}' MENANG! <<<")
+                    print(f"\n>>> PEMAIN '{warna_simbol(giliran)}' MENANG! <<<")
                     menang = True
                     game_over = True
                     break
@@ -168,7 +184,7 @@ def game_tictactoe():
     input("Tekan Enter untuk kembali...")
 
 # ==========================================
-# BAGIAN 3: SISTEM UTAMA
+# LOGIN
 # ==========================================
 
 def login_system():
@@ -190,8 +206,12 @@ def login_system():
             limit -= 1
             print(f">> Gagal! Sisa percobaan: {limit}\n")
     
-    print("Sistem Terkunci. Jalankan ulang program.")
+    print("Sistem Terkunci.")
     return False
+
+# ==========================================
+# MENU UTAMA
+# ==========================================
 
 def menu_utama():
     while True:
@@ -221,7 +241,7 @@ def menu_utama():
             time.sleep(1)
 
 # ==========================================
-# BAGIAN 4: EKSEKUSI PROGRAM
+# MAIN PROGRAM
 # ==========================================
 
 if __name__ == "__main__":
