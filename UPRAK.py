@@ -19,38 +19,63 @@ def loading(durasi=1):
 # ==========================================
 # GAME 1: BATU GUNTING KERTAS (TETAP)
 # ==========================================
-
 def game_batu_gunting_kertas():
     bersihkan_layar()
     print("="*40)
     print("   GAME 1: BATU GUNTING KERTAS")
     print("="*40)
-    print("Lawan komputer! Ketik 'x' untuk kembali.")
-    
+    print("1 Ronde terdiri dari 3 pertandingan.")
+    print("Yang menang terbanyak akan menang ronde.")
+    print("Ketik 'x' untuk kembali.\n")
+
     pilihan = ["batu", "gunting", "kertas"]
-    
+
     while True:
-        komputer = random.choice(pilihan)
-        user = input("\nPilih (batu/gunting/kertas): ").lower()
-        
-        if user == 'x':
-            break
-            
-        if user not in pilihan:
-            print(">> Typo? Masukkan: batu, gunting, atau kertas.")
-            continue
-            
-        loading(0.5)
-        print(f"Kamu: {user.upper()}  VS  Komputer: {komputer.upper()}")
-        
-        if user == komputer:
-            print(">> HASIL: SERI!")
-        elif (user == "batu" and komputer == "gunting") or \
-             (user == "gunting" and komputer == "kertas") or \
-             (user == "kertas" and komputer == "batu"):
-            print(">> HASIL: MENANG! Hebat!")
+        skor_user = 0
+        skor_komputer = 0
+
+        for match in range(1, 4):
+            print(f"\n--- MATCH {match} ---")
+            print(f"Skor sementara -> Kamu: {skor_user} | Komputer: {skor_komputer}")
+
+            komputer = random.choice(pilihan)
+            user = input("Pilih (batu/gunting/kertas): ").lower()
+
+            if user == 'x':
+                return
+
+            if user not in pilihan:
+                print(">> Pilihan tidak valid!")
+                continue
+
+            loading(0.5)
+            print(f"Kamu: {user.upper()}  VS  Komputer: {komputer.upper()}")
+
+            if user == komputer:
+                print(">> satu lagi")
+            elif (user == "batu" and komputer == "gunting") or \
+                 (user == "gunting" and komputer == "kertas") or \
+                 (user == "kertas" and komputer == "batu"):
+                print(">> Kamu MENANG match ini!")
+                skor_user += 1
+            else:
+                print(">> Komputer MENANG match ini!")
+                skor_komputer += 1
+
+        # HASIL RONDE
+        print("\n===== HASIL RONDE =====")
+        print(f"Total Skor -> Kamu: {skor_user} | Komputer: {skor_komputer}")
+
+        if skor_user > skor_komputer:
+            print(">>> Kamu MENANG ronde!")
+        elif skor_user < skor_komputer:
+            print(">>> Kamu KALAH ronde!")
         else:
-            print(">> HASIL: KALAH... Coba lagi!")
+            print(">>> Ronde berakhir SERI!")
+
+        ulang = input("\nMain ronde lagi? (y/n): ").lower()
+        if ulang != 'y':
+            break
 
 # ==========================================
 # GAME 2: TEBAK ANGKA (TETAP)
